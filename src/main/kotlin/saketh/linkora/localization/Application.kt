@@ -5,6 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
 import kotlinx.serialization.json.Json
 import saketh.linkora.localization.data.repository.LocalizationRepoImpl
 import saketh.linkora.localization.domain.repository.LocalizationRepo
@@ -28,6 +29,9 @@ val DefaultJSONConfig = Json {
 fun Application.module() {
     install(ContentNegotiation) {
         json(DefaultJSONConfig)
+    }
+    install(CORS) {
+        anyHost()
     }
     val localizationRepo: LocalizationRepo = LocalizationRepoImpl()
     configureRouting(localizationRepo)
